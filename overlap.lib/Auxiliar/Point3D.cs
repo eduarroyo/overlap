@@ -1,4 +1,4 @@
-﻿namespace overlap.lib
+﻿namespace overlap.lib.Auxiliar
 {
     public class Point3D
     {

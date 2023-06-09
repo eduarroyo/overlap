@@ -1,4 +1,7 @@
-﻿namespace overlap.lib
+﻿using overlap.lib.Auxiliar;
+using overlap.lib.Behaviour;
+
+namespace overlap.lib.Figures
 {
     public class AlignedCube : Strategy_IntersectsFigure<AlignedCube>
     {
@@ -7,29 +10,29 @@
 
         public AlignedCube(Point3D center, double edgeLength)
         {
-            if(edgeLength <= 0)
+            if (edgeLength <= 0)
             {
                 throw new ArgumentOutOfRangeException("Edge's length must be a possitive number.");
             }
 
-            this.Center = center;
-            this.EdgeLength = edgeLength;
+            Center = center;
+            EdgeLength = edgeLength;
         }
 
-        public AlignedCube(double centerX, double centerY, double centerZ, double edgeLength): this(new Point3D(centerX, centerY, centerZ), edgeLength)
+        public AlignedCube(double centerX, double centerY, double centerZ, double edgeLength) : this(new Point3D(centerX, centerY, centerZ), edgeLength)
         {
 
         }
 
         public bool intersects(AlignedCube figure)
         {
-            double distanceBetweenCenters = EuclideanDistance(this.Center, figure.Center);
-            double edgesSumHalved = (this.EdgeLength + figure.EdgeLength) / 2;
+            double distanceBetweenCenters = EuclideanDistance(Center, figure.Center);
+            double edgesSumHalved = (EdgeLength + figure.EdgeLength) / 2;
 
             return distanceBetweenCenters <= edgesSumHalved;
         }
 
-        double EuclideanDistance(Point3D pointA, Point3D pointB)=> Math.Sqrt(
+        double EuclideanDistance(Point3D pointA, Point3D pointB) => Math.Sqrt(
                                     Math.Pow(pointA.X - pointB.X, 2)
                                     + Math.Pow(pointA.Y - pointB.Y, 2)
                                     + Math.Pow(pointA.Z - pointB.Z, 2));

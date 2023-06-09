@@ -1,4 +1,4 @@
-﻿namespace overlap.lib
+﻿namespace overlap.lib.Behaviour
 {
     public interface Strategy_IntersectsFigure<T>
     {

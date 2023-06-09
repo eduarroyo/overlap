@@ -1,4 +1,4 @@
-using overlap.lib;
+using overlap.lib.Figures;
 
 namespace overlap.test
 {
