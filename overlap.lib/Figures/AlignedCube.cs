@@ -12,7 +12,7 @@ namespace overlap.lib.Figures
         {
             if (edgeLength <= 0)
             {
-                throw new ArgumentOutOfRangeException("Edge's length must be a possitive number.");
+                throw new ArgumentOutOfRangeException("Edge's length must be a positive number.");
             }
 
             Center = center;
