@@ -1,46 +1,56 @@
-﻿using overlap.lib.Auxiliar;
-using overlap.lib.Behaviour;
+﻿using overlap.lib.Behaviour;
 
 namespace overlap.lib.Figures
 {
-    public class AlignedCube : Strategy_IntersectsFigure<AlignedCube>
+    public class AlignedCube : IntersectsFigure<AlignedCube>
     {
         public Point3D Center { get; private set; }
         public double EdgeLength { get; set; }
 
+        public AlignedEdge EdgeX { get; set; }
+        public AlignedEdge EdgeY { get; set; }
+        public AlignedEdge EdgeZ { get; set; }
+
+
         public AlignedCube(Point3D center, double edgeLength)
         {
-            if (edgeLength <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Edge's length must be a positive number.");
-            }
+            ValidateEdgeLength(edgeLength);
 
             Center = center;
             EdgeLength = edgeLength;
+
+            double halfEdge = this.EdgeLength / 2D;
+            EdgeX = new AlignedEdge(this.Center.X - halfEdge, this.Center.X + halfEdge);
+            EdgeY = new AlignedEdge(this.Center.Y - halfEdge, this.Center.Y + halfEdge);
+            EdgeZ = new AlignedEdge(this.Center.Z - halfEdge, this.Center.Z + halfEdge);
+        }
+
+        private void ValidateEdgeLength(double edgeLength)
+        {
+            if (edgeLength <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Edge length must be a positive number.");
+            }
         }
 
         public AlignedCube(double centerX, double centerY, double centerZ, double edgeLength) : this(new Point3D(centerX, centerY, centerZ), edgeLength)
-        {
+        { }
 
-        }
-
-        public bool intersects(AlignedCube figure)
+        public bool Intersects(AlignedCube otherCube)
         {
-            double distanceBetweenCenters = EuclideanDistance(Center, figure.Center);
-            double edgesSumHalved = (EdgeLength + figure.EdgeLength) / 2;
+            double distanceBetweenCenters = this.Center.DistanceTo(otherCube.Center);
+            double edgesSumHalved = (EdgeLength + otherCube.EdgeLength) / 2;
 
             return distanceBetweenCenters <= edgesSumHalved;
         }
 
-        double EuclideanDistance(Point3D pointA, Point3D pointB) => Math.Sqrt(
-                                    Math.Pow(pointA.X - pointB.X, 2)
-                                    + Math.Pow(pointA.Y - pointB.Y, 2)
-                                    + Math.Pow(pointA.Z - pointB.Z, 2));
-
-        public double intersectedVolume(AlignedCube figure)
+        public double IntersectedVolume(AlignedCube otherCube)
         {
-            throw new NotImplementedException();
+            double intersectedX = this.EdgeX.OverlappedLength(otherCube.EdgeX);
+            double intersectedY = this.EdgeY.OverlappedLength(otherCube.EdgeY);
+            double intersectedZ = this.EdgeZ.OverlappedLength(otherCube.EdgeZ);
+            double intersectedVolume = intersectedX * intersectedY * intersectedZ;
+            return intersectedVolume;
         }
-
     }
 }
