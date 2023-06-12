@@ -2,7 +2,7 @@
 
 namespace overlap.lib.Figures
 {
-    public class AlignedCube : IntersectsFigure<AlignedCube>
+    public class AlignedCube : IntersectsFigure<AlignedCube>, IntersectsFigure<Sphere>
     {
         public Point3D Center { get; private set; }
         public double EdgeLength { get; set; }
@@ -51,6 +51,16 @@ namespace overlap.lib.Figures
             double intersectedZ = this.EdgeZ.OverlappedLength(otherCube.EdgeZ);
             double intersectedVolume = intersectedX * intersectedY * intersectedZ;
             return intersectedVolume;
+        }
+
+        public bool Intersects(Sphere otherSphere)
+        {
+            return otherSphere.Intersects(this);
+        }
+
+        public double IntersectedVolume(Sphere otherSphere)
+        {
+            return otherSphere.IntersectedVolume(this);
         }
     }
 }
