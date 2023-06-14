@@ -1,4 +1,6 @@
 # Cube intersection
+
+## Problem
 Design and start and application (or test project) which accepts as input dimensions and
 coordinates of two cubic objects (considering a 3D space). The application must determine
 whether the two objects collide and calculate the intersected volume.

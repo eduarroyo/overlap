@@ -1,11 +1,11 @@
 ﻿namespace overlap.lib.Figures
 {
-    public class AlignedEdge
+    public class ProjectionOnEdge
     {
         public double Min { get; set; }
         public double Max { get; set; }
 
-        public AlignedEdge(double min, double max)
+        public ProjectionOnEdge(double min, double max)
         {
             Min = min;
             Max = max;
@@ -13,12 +13,12 @@
 
         public double Length => this.Max - this.Min;
 
-        public bool Overlaps(AlignedEdge other)
+        public bool Overlaps(ProjectionOnEdge other)
         {
-            return this.Min < other.Max && this.Max > other.Min;
+            return this.Min <= other.Max && this.Max >= other.Min;
         }
 
-        public double OverlappedLength(AlignedEdge other)
+        public double OverlappedLength(ProjectionOnEdge other)
         {
             if(!this.Overlaps(other))
             {
